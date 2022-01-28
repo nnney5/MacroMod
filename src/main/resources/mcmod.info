@@ -1,0 +1,16 @@
+[
+{
+  "modid": "macromod",
+  "name": "Macro Mod",
+  "description": "Basic Macro mod.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Hashblen"],
+  "credits": "MPKMOD",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
