@@ -22,6 +22,7 @@ public class MenuGUI extends GuiScreen {
         for(int i=0; i<10; i++){
             this.lineList.add(new MacroLine());
         }
+        this.lineList.add(new MacroLine(true, true, false, true, true, false, false, 4.2f, 6.9f));
     }
 
     GuiButton close;
@@ -42,6 +43,7 @@ public class MenuGUI extends GuiScreen {
         this.buttonList.add(this.load = new GuiButton(3, (int)(width*0.95)-100, (int)(height*0.05)+30, 100, 20, "Load"));
 
         this.lines = new MacroFileGUI(this, lineList, 300);
+        lines.initLines();
     }
 
     public void mouseClicked (int mouseX, int mouseY, int mouseButton){
@@ -65,7 +67,7 @@ public class MenuGUI extends GuiScreen {
     public void drawScreen(int mouseX, int mouseY, float partialTicks){
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
-        this.drawCenteredString(mc.fontRendererObj, "Edit \2476Macro", (int)(width/2), (int)(height*0.05), Color.WHITE.getRGB());
+        this.drawCenteredString(mc.fontRendererObj, "Edit \2476Macro", width/2, (int)(height*0.05), Color.WHITE.getRGB());
         this.name.drawTextBox();
         this.lines.drawScreen(mouseX, mouseY, partialTicks);
     }
@@ -84,7 +86,6 @@ public class MenuGUI extends GuiScreen {
 
     Minecraft getMinecraftInstance()
     {
-        /** Reference to the Minecraft object. */
         return mc;
     }
 

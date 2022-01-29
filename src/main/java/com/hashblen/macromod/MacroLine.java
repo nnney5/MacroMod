@@ -90,16 +90,6 @@ public class MacroLine {
         this.pitch = pitch;
     }
 
-    private int lineNumber;
-
-    public int getLineNumber() {
-        return lineNumber;
-    }
-
-    public void setLineNumber(int lineNumber) {
-        this.lineNumber = lineNumber;
-    }
-
     private GuiCheckBox boxW;
     private GuiCheckBox boxA;
     private GuiCheckBox boxS;
@@ -123,7 +113,6 @@ public class MacroLine {
         this.jump=jump;
         this.yaw=yaw;
         this.pitch=pitch;
-        this.lineNumber=lineNumber;
 
         this.boxW = new GuiCheckBox(1, 0, 0, "", W);
         this.boxA = new GuiCheckBox(2, 0, 0, "", A);
@@ -211,6 +200,7 @@ public class MacroLine {
 
         Minecraft mc = Minecraft.getMinecraft();
         //y=y+slotIdx*20;
+        x=x+10;
 
         this.boxW.yPosition = y;
         this.boxA.yPosition = y;
@@ -254,28 +244,39 @@ public class MacroLine {
         //System.out.println("drawLine " + slotIdx + " " + mouseX);
     }
 
-    public void mousePressed(int slotIdx, int x, int y, int mouseButton){
-        /*if(this.boxW.isMouseOver()){
+    public void initLineGui(){
+        boxW.setIsChecked(W);
+        boxA.setIsChecked(A);
+        boxS.setIsChecked(S);
+        boxD.setIsChecked(D);
+        boxSprint.setIsChecked(sprint);
+        boxSneak.setIsChecked(sneak);
+        boxJump.setIsChecked(jump);
+        fieldYaw.setText(String.valueOf(yaw));
+        fieldPitch.setText(String.valueOf(pitch));
+    }
+
+    public boolean mousePressed(int slotIdx, int x, int y, int mouseButton){
+        if(this.boxW.isMouseOver()){
             W = !W;
             boxW.setIsChecked(W);
             return true;
         }
         else if(this.boxA.isMouseOver()){
             A = !A;
-            boxW.setIsChecked(A);
+            boxA.setIsChecked(A);
             return true;
         }
         else if(this.boxS.isMouseOver()){
             S = !S;
-            boxW.setIsChecked(S);
+            boxS.setIsChecked(S);
             return true;
         }
         else if(this.boxD.isMouseOver()){
             D = !D;
-            boxW.setIsChecked(D);
+            boxD.setIsChecked(D);
             return true;
         }
-        this.boxS.
         else if(this.boxSprint.isMouseOver()){
             sprint = !sprint;
             boxSprint.setIsChecked(sprint);
@@ -283,24 +284,26 @@ public class MacroLine {
         }
         else if(this.boxSneak.isMouseOver()){
             sneak = !sneak;
-            boxW.setIsChecked(sneak);
+            boxSneak.setIsChecked(sneak);
             return true;
         }
         else if(this.boxJump.isMouseOver()){
             jump = !jump;
             boxJump.setIsChecked(jump);
             return true;
-        }*/
+        }
+        /*
         this.boxW.mousePressed(mc, x, y);
         this.boxA.mousePressed(mc, x, y);
         this.boxS.mousePressed(mc, x, y);
         this.boxD.mousePressed(mc, x, y);
         this.boxSprint.mousePressed(mc, x, y);
         this.boxSneak.mousePressed(mc, x, y);
-        this.boxJump.mousePressed(mc, x, y);
+        this.boxJump.mousePressed(mc, x, y);*/
         this.fieldYaw.mouseClicked(x, y, mouseButton);
         this.fieldPitch.mouseClicked(x, y, mouseButton);
         //System.out.println("mousePressed " + x + " " + y);
+        return false;
     }
 
     public void updateScreen(){

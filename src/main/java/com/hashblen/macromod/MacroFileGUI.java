@@ -64,10 +64,17 @@ public class MacroFileGUI extends GuiScrollingList {
 
         line.drawLine(slotIdx, this.left+30, slotTop, slotBuffer, mouseX, mouseY, isSelected(slotIdx));
         GuiTextField cField = counterFields.get(slotIdx);
+        cField.setText(Integer.toString(slotIdx));
         cField.xPosition = this.left+5;
         cField.yPosition = slotTop;
         cField.drawTextBox();
 
+    }
+
+    public void initLines(){
+        for( MacroLine l : lines){
+            l.initLineGui();
+        }
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton){
@@ -79,18 +86,14 @@ public class MacroFileGUI extends GuiScrollingList {
     }
 
     public void updateScreen(){
-        int i=0;
         for( MacroLine l : lines){
             l.updateScreen();
-            i++;
         }
     }
 
     public void keyTyped(char par1, int par2) throws IOException {
-        int i=0;
         for( MacroLine l : lines){
             l.keyTyped(par1, par2);
-            i++;
         }
     }
 
