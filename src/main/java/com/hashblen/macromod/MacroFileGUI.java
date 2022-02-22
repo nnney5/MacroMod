@@ -98,6 +98,29 @@ public class MacroFileGUI extends GuiScrollingList {
         }
     }
 
+    public void addLine(int index) {
+        lines.add(index, new MacroLine());
+        GuiTextField g = new GuiTextField(counterFields.size()-1, mc.fontRendererObj, this.left, top, 25, 20);
+        counterFields.add(g);
+    }
+
+    public void duplicateLine(int index){
+        try {
+            lines.add(index, new MacroLine(lines.get(index - 1)));
+            GuiTextField g = new GuiTextField(counterFields.size()-1, mc.fontRendererObj, this.left, top, 25, 20);
+            counterFields.add(g);
+        }catch(IndexOutOfBoundsException e){
+
+        }
+    }
+
+    public void deleteLine(int index){
+        if(index!=0) {
+            lines.remove(index);
+            counterFields.remove(counterFields.size() - 1);
+        }
+    }
+
     /*public void drawScreen(int mouseX, int mouseY, float partialTicks){
         super.drawScreen(mouseX, mouseY, partialTicks);
     }*/

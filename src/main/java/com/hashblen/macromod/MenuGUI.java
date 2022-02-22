@@ -70,14 +70,19 @@ public class MenuGUI extends GuiScreen {
             writeLines(macroLinesToLines(lineList), path + macroName);
             System.out.println("Macro saved to: " + macroName);
         }
+        int index = selected;
+        if(index==-1){
+            index = lines.getSize()-1;
+            if(index==-1) index=0;
+        }
         if(addRow.isMouseOver()){
-
+            lines.addLine(index+1);
         }
         if(duplicateRow.isMouseOver()){
-
+            lines.duplicateLine(index+1);
         }
         if(deleteRow.isMouseOver()){
-
+            lines.deleteLine(index);
         }
         this.name.mouseClicked(mouseX, mouseY, mouseButton);
         this.lines.mouseClicked(mouseX, mouseY, mouseButton);

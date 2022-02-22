@@ -51,7 +51,7 @@ public class CSVManip {
                 boolean lmb = Boolean.valueOf(record[14]);
                 boolean rmb = Boolean.valueOf(record[15]);
                 MacroLine l = new MacroLine(w, a, s, d, sprint, sneak, jump, y, p, lmb, rmb);
-                System.out.println(record);
+                System.out.println(record.toString());
                 lines.add(l);
             }
             reader.close();
