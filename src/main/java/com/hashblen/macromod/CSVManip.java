@@ -29,7 +29,7 @@ public class CSVManip {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
+        return new ArrayList<String[]>();
     }
 
     public static List<MacroLine> linesToMacroLines(String name){
@@ -37,7 +37,7 @@ public class CSVManip {
             CSVReader reader = new CSVReader(new FileReader(name));
             reader.readNext();
             String[] record;
-            List<MacroLine> lines = new ArrayList<>();
+            List<MacroLine> lines = new ArrayList<MacroLine>();
             while((record = reader.readNext()) != null){
                 float y = Float.valueOf(record[5]);
                 float p = Float.valueOf(record[6]);
@@ -59,7 +59,7 @@ public class CSVManip {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
+        return new ArrayList<MacroLine>();
     }
 
     public static void createFile(Path p){
@@ -71,7 +71,7 @@ public class CSVManip {
     }
 
     public static List<String[]> macroLinesToLines(List<MacroLine> l){
-        List<String[]> list = new ArrayList<>();
+        List<String[]> list = new ArrayList<String[]>();
         for(MacroLine line : l){
             list.add(line.toString().split(","));
         }

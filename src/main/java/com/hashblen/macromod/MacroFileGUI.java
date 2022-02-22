@@ -22,7 +22,7 @@ public class MacroFileGUI extends GuiScrollingList {
         this.parent = parent;
         this.lines = lines;
 
-        counterFields = new ArrayList<>();
+        counterFields = new ArrayList<GuiTextField>();
         for(int i=0; i<lines.size(); i++){
             GuiTextField g = new GuiTextField(i, mc.fontRendererObj, this.left, top, 25, 20);
             g.setText(Integer.toString(i));

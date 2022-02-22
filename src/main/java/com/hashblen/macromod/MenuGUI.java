@@ -31,6 +31,9 @@ public class MenuGUI extends GuiScreen {
     GuiTextField name;
     GuiButton load;
     MacroFileGUI lines;
+    GuiButton addRow;
+    GuiButton duplicateRow;
+    GuiButton deleteRow;
     private List<MacroLine> lineList;
 
     private int selected = -1;
@@ -43,6 +46,10 @@ public class MenuGUI extends GuiScreen {
         name.setText(macroName);
 
         this.buttonList.add(this.load = new GuiButton(3, (int)(width*0.95)-100, (int)(height*0.05)+30, 100, 20, "Load"));
+
+        this.buttonList.add(this.addRow = new GuiButton(4, (int)(width*0.95)-100, (int)(height*0.05)+90, 100, 20, "\247bAdd Row"));
+        this.buttonList.add(this.duplicateRow = new GuiButton(5, (int)(width*0.95)-100, (int)(height*0.05)+110, 100, 20, "\247dDuplicate Row"));
+        this.buttonList.add(this.deleteRow = new GuiButton(2, (int)(width*0.95)-100, (int)(height*0.05)+130, 100, 20, "\2474Delete Row"));
 
         this.lines = new MacroFileGUI(this, lineList, 310);
         lines.initLines();
@@ -62,6 +69,15 @@ public class MenuGUI extends GuiScreen {
             createFile(Paths.get(path + macroName));
             writeLines(macroLinesToLines(lineList), path + macroName);
             System.out.println("Macro saved to: " + macroName);
+        }
+        if(addRow.isMouseOver()){
+
+        }
+        if(duplicateRow.isMouseOver()){
+
+        }
+        if(deleteRow.isMouseOver()){
+
         }
         this.name.mouseClicked(mouseX, mouseY, mouseButton);
         this.lines.mouseClicked(mouseX, mouseY, mouseButton);
