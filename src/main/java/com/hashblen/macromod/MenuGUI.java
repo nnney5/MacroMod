@@ -5,44 +5,46 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraftforge.fml.common.ModContainer;
+import com.hashblen.macromod.CSVManip;
 
 import javax.crypto.Mac;
 import java.awt.*;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
+import static com.hashblen.macromod.CSVManip.*;
 import static com.hashblen.macromod.MacroMod.macroName;
+import static com.hashblen.macromod.MacroMod.path;
 
 public class MenuGUI extends GuiScreen {
 
     //Minecraft mc = Minecraft.getMinecraft();
 
     public MenuGUI(){
-        this.lineList = new ArrayList<MacroLine>();
-        for(int i=0; i<10; i++){
-            this.lineList.add(new MacroLine());
-        }
-        this.lineList.add(new MacroLine(true, true, false, true, true, false, false, 4.2f, 6.9f));
+        this.lineList = CSVManip.linesToMacroLines(path + macroName);
     }
 
     GuiButton close;
+    GuiButton save;
     GuiTextField name;
     GuiButton load;
     MacroFileGUI lines;
-    private ArrayList<MacroLine> lineList;
+    private List<MacroLine> lineList;
 
     private int selected = -1;
 
     public void initGui(){
         this.buttonList.add(this.close = new GuiButton(1, (int)(width*0.95)-100, (int)(height*0.05), 100, 20, "\247cClose"));
-
+        this.buttonList.add(this.save = new GuiButton(2, (int)(width*0.95)-100, (int)(height*0.05)+60, 100, 20, "\247aSave"));
         this.name = new GuiTextField(2, mc.fontRendererObj, (int)(width*0.95)-200, (int)(height*0.05)+30, 100, 20);
         name.setMaxStringLength(23);
         name.setText(macroName);
 
         this.buttonList.add(this.load = new GuiButton(3, (int)(width*0.95)-100, (int)(height*0.05)+30, 100, 20, "Load"));
 
-        this.lines = new MacroFileGUI(this, lineList, 300);
+        this.lines = new MacroFileGUI(this, lineList, 310);
         lines.initLines();
     }
 
@@ -52,7 +54,14 @@ public class MenuGUI extends GuiScreen {
         }
         if(load.isMouseOver()){
             macroName=name.getText();
+            createFile(Paths.get(path + macroName));
+
             System.out.println("Macro name changed to: " + macroName);
+        }
+        if(save.isMouseOver()){
+            createFile(Paths.get(path + macroName));
+            writeLines(macroLinesToLines(lineList), path + macroName);
+            System.out.println("Macro saved to: " + macroName);
         }
         this.name.mouseClicked(mouseX, mouseY, mouseButton);
         this.lines.mouseClicked(mouseX, mouseY, mouseButton);

@@ -17,6 +17,8 @@ public class MacroLine {
     private boolean jump;
     private float yaw;
     private float pitch;
+    private boolean lmb;
+    private boolean rmb;
 
     public boolean isW() {
         return W;
@@ -90,6 +92,22 @@ public class MacroLine {
         this.pitch = pitch;
     }
 
+    public boolean isLmb() {
+        return lmb;
+    }
+
+    public void setLmb(boolean lmb) {
+        this.lmb = lmb;
+    }
+
+    public boolean isRmb() {
+        return rmb;
+    }
+
+    public void setRmb(boolean rmb) {
+        this.rmb = rmb;
+    }
+
     private GuiCheckBox boxW;
     private GuiCheckBox boxA;
     private GuiCheckBox boxS;
@@ -99,11 +117,11 @@ public class MacroLine {
     private GuiCheckBox boxJump;
     private GuiTextField fieldYaw;
     private GuiTextField fieldPitch;
+    private GuiCheckBox boxLmb;
+    private GuiCheckBox boxRmb;
 
-    Minecraft mc = Minecraft.getMinecraft();
 
-
-    public MacroLine(boolean W, boolean A, boolean S, boolean D, boolean sprint, boolean sneak, boolean jump, float yaw, float pitch){
+    public MacroLine(boolean W, boolean A, boolean S, boolean D, boolean sprint, boolean sneak, boolean jump, float yaw, float pitch, boolean lmb, boolean rmb){
         this.W=W;
         this.A=A;
         this.S=S;
@@ -113,6 +131,8 @@ public class MacroLine {
         this.jump=jump;
         this.yaw=yaw;
         this.pitch=pitch;
+        this.lmb = lmb;
+        this.rmb = rmb;
 
         this.boxW = new GuiCheckBox(1, 0, 0, "", W);
         this.boxA = new GuiCheckBox(2, 0, 0, "", A);
@@ -121,6 +141,10 @@ public class MacroLine {
         this.boxSprint = new GuiCheckBox(5, 0, 0, "", sprint);
         this.boxSneak = new GuiCheckBox(6, 0, 0, "", sneak);
         this.boxJump = new GuiCheckBox(7, 0, 0, "", jump);
+        this.boxLmb = new GuiCheckBox(8, 0, 0, "", lmb);
+        this.boxRmb = new GuiCheckBox(9, 0, 0, "", rmb);
+
+        Minecraft mc = Minecraft.getMinecraft();
 
         this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 40, 20);
         fieldYaw.setText(Float.toString(yaw));
@@ -130,7 +154,7 @@ public class MacroLine {
     }
 
     public MacroLine(MacroLine l){
-        this(l.isW(), l.isA(), l.isS(), l.isD(), l.isSprint(), l.isSneak(), l.isJump(), l.getYaw(), l.getPitch());
+        this(l.isW(), l.isA(), l.isS(), l.isD(), l.isSprint(), l.isSneak(), l.isJump(), l.getYaw(), l.getPitch(), l.isLmb(), l.isRmb());
 
         this.boxW = new GuiCheckBox(1, 0, 0, "", l.isW());
         this.boxA = new GuiCheckBox(2, 0, 0, "", l.isA());
@@ -139,6 +163,10 @@ public class MacroLine {
         this.boxSprint = new GuiCheckBox(5, 0, 0, "", l.isSprint());
         this.boxSneak = new GuiCheckBox(6, 0, 0, "", l.isSneak());
         this.boxJump = new GuiCheckBox(7, 0, 0, "", l.isJump());
+        this.boxLmb = new GuiCheckBox(8, 0, 0, "", l.isLmb());
+        this.boxRmb = new GuiCheckBox(9, 0, 0, "", l.isRmb());
+
+        Minecraft mc = Minecraft.getMinecraft();
 
         this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 40, 20);
         fieldYaw.setText(Float.toString(l.getYaw()));
@@ -156,6 +184,8 @@ public class MacroLine {
         this.jump=false;
         this.yaw=0.0f;
         this.pitch=0.0f;
+        this.lmb=false;
+        this.rmb=false;
 
         this.boxW = new GuiCheckBox(1, 0, 0, "", false);
         this.boxA = new GuiCheckBox(2, 0, 0, "", false);
@@ -164,31 +194,10 @@ public class MacroLine {
         this.boxSprint = new GuiCheckBox(5, 0, 0, "", false);
         this.boxSneak = new GuiCheckBox(6, 0, 0, "", false);
         this.boxJump = new GuiCheckBox(7, 0, 0, "", false);
+        this.boxLmb = new GuiCheckBox(8, 0, 0, "", false);
+        this.boxRmb = new GuiCheckBox(9, 0, 0, "", false);
 
-        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 40, 20);
-        fieldYaw.setText(Float.toString(0.0f));
-        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 40, 20);
-        fieldPitch.setText(Float.toString(0.0f));
-    }
-
-    public MacroLine(int lineNumber){
-        this.W=false;
-        this.A=false;
-        this.S=false;
-        this.D=false;
-        this.sprint=false;
-        this.sneak=false;
-        this.jump=false;
-        this.yaw=0.0f;
-        this.pitch=0.0f;
-
-        this.boxW = new GuiCheckBox(1, 0, 0, "", false);
-        this.boxA = new GuiCheckBox(2, 0, 0, "", false);
-        this.boxS = new GuiCheckBox(3, 0, 0, "", false);
-        this.boxD = new GuiCheckBox(4, 0, 0, "", false);
-        this.boxSprint = new GuiCheckBox(5, 0, 0, "", false);
-        this.boxSneak = new GuiCheckBox(6, 0, 0, "", false);
-        this.boxJump = new GuiCheckBox(7, 0, 0, "", false);
+        Minecraft mc = Minecraft.getMinecraft();
 
         this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 40, 20);
         fieldYaw.setText(Float.toString(0.0f));
@@ -211,6 +220,8 @@ public class MacroLine {
         this.boxJump.yPosition = y;
         this.fieldYaw.yPosition = y;
         this.fieldPitch.yPosition = y;
+        this.boxLmb.yPosition = y;
+        this.boxRmb.yPosition = y;
 
         this.boxW.xPosition = x;
         this.boxA.xPosition = x+20;
@@ -221,6 +232,8 @@ public class MacroLine {
         this.boxJump.xPosition = x+120;
         this.fieldYaw.xPosition = x+140;
         this.fieldPitch.xPosition = x+180;
+        this.boxLmb.xPosition = x+230;
+        this.boxRmb.xPosition = x+250;
 
         this.boxW.enabled = W;
         this.boxA.enabled = A;
@@ -231,6 +244,8 @@ public class MacroLine {
         this.boxJump.enabled = jump;
         this.fieldYaw.setText(String.valueOf(yaw));
         this.fieldPitch.setText(String.valueOf(pitch));
+        this.boxLmb.enabled = lmb;
+        this.boxRmb.enabled = rmb;
 
         this.boxW.drawButton(mc, mouseX, mouseY);
         this.boxA.drawButton(mc, mouseX, mouseY);
@@ -241,8 +256,16 @@ public class MacroLine {
         this.boxJump.drawButton(mc, mouseX, mouseY);
         this.fieldYaw.drawTextBox();
         this.fieldPitch.drawTextBox();
+        this.boxLmb.drawButton(mc, mouseX, mouseY);
+        this.boxRmb.drawButton(mc, mouseX, mouseY);
         //System.out.println("drawLine " + slotIdx + " " + mouseX);
     }
+
+    //doesn't work everything goes to 0.0 and over the other, everything is bugged...
+    /*public void drawFields(){
+        this.fieldYaw.drawTextBox();
+        this.fieldPitch.drawTextBox();
+    }*/
 
     public void initLineGui(){
         boxW.setIsChecked(W);
@@ -254,6 +277,8 @@ public class MacroLine {
         boxJump.setIsChecked(jump);
         fieldYaw.setText(String.valueOf(yaw));
         fieldPitch.setText(String.valueOf(pitch));
+        boxLmb.setIsChecked(lmb);
+        boxRmb.setIsChecked(rmb);
     }
 
     public boolean mousePressed(int slotIdx, int x, int y, int mouseButton){
@@ -292,6 +317,16 @@ public class MacroLine {
             boxJump.setIsChecked(jump);
             return true;
         }
+        else if(this.boxLmb.isMouseOver()){
+            lmb = !lmb;
+            boxLmb.setIsChecked(lmb);
+            return true;
+        }
+        else if(this.boxRmb.isMouseOver()){
+            rmb = !rmb;
+            boxRmb.setIsChecked(rmb);
+            return true;
+        }
         /*
         this.boxW.mousePressed(mc, x, y);
         this.boxA.mousePressed(mc, x, y);
@@ -312,10 +347,26 @@ public class MacroLine {
         //System.out.println("updateScreen ");
     }
 
-    public void keyTyped(char par1, int par2) throws IOException {
+    public void keyTyped(char par1, int par2) {
         this.fieldYaw.textboxKeyTyped(par1, par2);
         //System.out.println("keyTyped " + par1 + " " + par2);
         this.fieldPitch.textboxKeyTyped(par1, par2);
     }
 
+    @Override
+    public String toString() {
+        return "0.0,0.0,0.0,0.0,0.0," +
+                yaw + "," +
+                pitch + "," +
+                W + "," +
+                A + "," +
+                S + "," +
+                D + "," +
+                sprint + "," +
+                sneak + "," +
+                jump + "," +
+                lmb + "," +
+                rmb + "," +
+                " 0.0, 0.0, 0.0";
+    }
 }

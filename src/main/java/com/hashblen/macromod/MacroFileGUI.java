@@ -7,21 +7,22 @@ import net.minecraftforge.fml.client.GuiScrollingList;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MacroFileGUI extends GuiScrollingList {
-    private ArrayList<MacroLine> lines;
+    private List<MacroLine> lines;
     private MenuGUI parent;
 
     private ArrayList<GuiTextField> counterFields;
 
     private Minecraft mc = Minecraft.getMinecraft();
 
-    public MacroFileGUI(MenuGUI parent, ArrayList<MacroLine> lines, int listWidth) {
+    public MacroFileGUI(MenuGUI parent, List<MacroLine> lines, int listWidth) {
         super(parent.getMinecraftInstance(), listWidth, parent.height, 32, parent.height - 88 + 4, 10, 20, parent.width, parent.height);
         this.parent = parent;
         this.lines = lines;
 
-        counterFields = new ArrayList<GuiTextField>();
+        counterFields = new ArrayList<>();
         for(int i=0; i<lines.size(); i++){
             GuiTextField g = new GuiTextField(i, mc.fontRendererObj, this.left, top, 25, 20);
             g.setText(Integer.toString(i));
@@ -55,7 +56,7 @@ public class MacroFileGUI extends GuiScrollingList {
         return (this.getSize()) * 20 + 1;
     }
 
-    ArrayList<MacroLine> getLines(){ return lines; }
+    List<MacroLine> getLines(){ return lines; }
 
     @Override
     protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, Tessellator tess) {
@@ -91,10 +92,14 @@ public class MacroFileGUI extends GuiScrollingList {
         }
     }
 
-    public void keyTyped(char par1, int par2) throws IOException {
+    public void keyTyped(char par1, int par2) {
         for( MacroLine l : lines){
             l.keyTyped(par1, par2);
         }
     }
+
+    /*public void drawScreen(int mouseX, int mouseY, float partialTicks){
+        super.drawScreen(mouseX, mouseY, partialTicks);
+    }*/
 
 }
