@@ -4,14 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
-import net.minecraftforge.fml.common.ModContainer;
-import com.hashblen.macromod.CSVManip;
-
-import javax.crypto.Mac;
 import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.hashblen.macromod.CSVManip.*;

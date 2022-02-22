@@ -4,8 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
 
-import java.io.IOException;
-
 public class MacroLine {
 
     private boolean W;

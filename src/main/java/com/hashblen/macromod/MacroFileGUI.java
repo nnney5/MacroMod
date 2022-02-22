@@ -5,7 +5,6 @@ import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraftforge.fml.client.GuiScrollingList;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +14,6 @@ public class MacroFileGUI extends GuiScrollingList {
 
     private ArrayList<GuiTextField> counterFields;
 
-    private Minecraft mc = Minecraft.getMinecraft();
-
     public MacroFileGUI(MenuGUI parent, List<MacroLine> lines, int listWidth) {
         super(parent.getMinecraftInstance(), listWidth, parent.height, 32, parent.height - 88 + 4, 10, 20, parent.width, parent.height);
         this.parent = parent;
@@ -24,7 +21,7 @@ public class MacroFileGUI extends GuiScrollingList {
 
         counterFields = new ArrayList<GuiTextField>();
         for(int i=0; i<lines.size(); i++){
-            GuiTextField g = new GuiTextField(i, mc.fontRendererObj, this.left, top, 25, 20);
+            GuiTextField g = new GuiTextField(i, Minecraft.getMinecraft().fontRendererObj, this.left, top, 25, 20);
             g.setText(Integer.toString(i));
             counterFields.add(g);
         }
@@ -100,14 +97,14 @@ public class MacroFileGUI extends GuiScrollingList {
 
     public void addLine(int index) {
         lines.add(index, new MacroLine());
-        GuiTextField g = new GuiTextField(counterFields.size()-1, mc.fontRendererObj, this.left, top, 25, 20);
+        GuiTextField g = new GuiTextField(counterFields.size()-1, Minecraft.getMinecraft().fontRendererObj, this.left, top, 25, 20);
         counterFields.add(g);
     }
 
     public void duplicateLine(int index){
         try {
             lines.add(index, new MacroLine(lines.get(index - 1)));
-            GuiTextField g = new GuiTextField(counterFields.size()-1, mc.fontRendererObj, this.left, top, 25, 20);
+            GuiTextField g = new GuiTextField(counterFields.size()-1, Minecraft.getMinecraft().fontRendererObj, this.left, top, 25, 20);
             counterFields.add(g);
         }catch(IndexOutOfBoundsException e){
 
