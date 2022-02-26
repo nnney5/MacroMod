@@ -3,10 +3,7 @@ package com.hashblen.macromod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.settings.GameSettings;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.GuiScrollingList;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +54,7 @@ public class MacroFile extends GuiScrollingList {
         return (this.getSize()) * 20 + 1;
     }
 
-    List<MacroLine> getLines(){ return lines; }
+    //List<MacroLine> getLines(){ return lines; }
 
     @Override
     protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, Tessellator tess) {
@@ -80,10 +77,8 @@ public class MacroFile extends GuiScrollingList {
     }
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton){
-        int i=0;
         for( MacroLine l : lines){
             l.mousePressed(mouseX, mouseY, mouseButton);
-            i++;
         }
     }
 
@@ -116,10 +111,10 @@ public class MacroFile extends GuiScrollingList {
     }
 
     public void deleteLine(int index){
-        if(index!=0) {
-            lines.remove(index);
-            counterFields.remove(counterFields.size() - 1);
-        }
+        if(index<0 || index>=lines.size())
+            return;
+        lines.remove(index);
+        counterFields.remove(counterFields.size() - 1);
     }
 
     /*public void drawScreen(int mouseX, int mouseY, float partialTicks){

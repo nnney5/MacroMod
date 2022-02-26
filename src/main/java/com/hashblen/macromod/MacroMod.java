@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.input.Keyboard;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -39,6 +40,11 @@ public class MacroMod
         Path p = Paths.get(path);
         try {
             Files.createDirectories(p);
+            File def = new File("default.csv");
+            boolean isAlready = def.createNewFile();
+            if(!isAlready){
+                System.out.print("created /MPKMod/macros/default.csv" );
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -88,7 +94,6 @@ public class MacroMod
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent e){
         if(lineList.isEmpty()) {
-            System.out.println("lineList empty!");
             return;
         }
         if(tick>=lineList.size()){

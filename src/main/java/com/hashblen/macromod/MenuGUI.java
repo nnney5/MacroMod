@@ -60,9 +60,14 @@ public class MenuGUI extends GuiScreen {
             macroName=name.getText();
             createFile(Paths.get(path + macroName));
 
+            this.lineList = CSVManip.linesToMacroLines(path + macroName);
+            this.lines = new MacroFile(this, lineList, 310);
+            lines.initLines();
+
             System.out.println("Macro name changed to: " + macroName);
         }
         if(save.isMouseOver()){
+            macroName=name.getText();
             createFile(Paths.get(path + macroName));
             writeLines(macroLinesToLines(lineList), path + macroName);
             System.out.println("Macro saved to: " + macroName);
@@ -70,7 +75,6 @@ public class MenuGUI extends GuiScreen {
         int index = selected;
         if(index==-1){
             index = lines.getSize()-1;
-            if(index==-1) index=0;
         }
         if(addRow.isMouseOver()){
             lines.addLine(index+1);
@@ -95,6 +99,7 @@ public class MenuGUI extends GuiScreen {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.drawCenteredString(mc.fontRendererObj, "Edit \2476Macro", width/2, (int)(height*0.05), Color.WHITE.getRGB());
+        this.drawString(mc.fontRendererObj, "W   A    S   D Sprint Sneak Jump Yaw  Pitch   LMB RMB", 52, 20, Color.WHITE.getRGB());
         this.name.drawTextBox();
         this.lines.drawScreen(mouseX, mouseY, partialTicks);
     }
@@ -127,4 +132,11 @@ public class MenuGUI extends GuiScreen {
         return index == selected;
     }
 
+    @Override
+    public void onGuiClosed() {
+        super.onGuiClosed();
+        createFile(Paths.get(path + macroName));
+        writeLines(macroLinesToLines(lineList), path + macroName);
+        System.out.println("Macro saved to: " + macroName);
+    }
 }

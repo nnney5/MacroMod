@@ -103,9 +103,9 @@ public class MacroLine {
 
         Minecraft mc = Minecraft.getMinecraft();
 
-        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 40, 20);
+        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 30, 20);
         fieldYaw.setText(Float.toString(yaw));
-        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 40, 20);
+        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 30, 20);
         fieldPitch.setText(Float.toString(pitch));
 
     }
@@ -125,9 +125,9 @@ public class MacroLine {
 
         Minecraft mc = Minecraft.getMinecraft();
 
-        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 40, 20);
+        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 30, 20);
         fieldYaw.setText(Float.toString(l.getYaw()));
-        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 40, 20);
+        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 30, 20);
         fieldPitch.setText(Float.toString(l.getPitch()));
     }
 
@@ -156,9 +156,9 @@ public class MacroLine {
 
         Minecraft mc = Minecraft.getMinecraft();
 
-        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 40, 20);
+        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 30, 20);
         fieldYaw.setText(Float.toString(0.0f));
-        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 40, 20);
+        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 30, 20);
         fieldPitch.setText(Float.toString(0.0f));
     }
 
@@ -185,10 +185,10 @@ public class MacroLine {
         this.boxS.xPosition = x+40;
         this.boxD.xPosition = x+60;
         this.boxSprint.xPosition = x+80;
-        this.boxSneak.xPosition = x+100;
-        this.boxJump.xPosition = x+120;
-        this.fieldYaw.xPosition = x+140;
-        this.fieldPitch.xPosition = x+180;
+        this.boxSneak.xPosition = x+110;
+        this.boxJump.xPosition = x+140;
+        this.fieldYaw.xPosition = x+160;
+        this.fieldPitch.xPosition = x+190;
         this.boxLmb.xPosition = x+230;
         this.boxRmb.xPosition = x+250;
 

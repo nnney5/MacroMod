@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -32,7 +31,10 @@ public class CSVManip {
     public static List<MacroLine> linesToMacroLines(String name){
         try {
             CSVReader reader = new CSVReader(new FileReader(name));
-            reader.readNext();
+            String[] firstLine = reader.readNext();
+            if(!firstLine[0].equals("X")){
+                System.err.println("file has wrong head, may start reading from 2nd line of the macro.");
+            }
             String[] record;
             List<MacroLine> lines = new ArrayList<MacroLine>();
             while((record = reader.readNext()) != null){
@@ -54,16 +56,21 @@ public class CSVManip {
             reader.close();
             return lines;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error reading the file: " + e.getMessage());
         }
         return new ArrayList<MacroLine>();
     }
 
     public static void createFile(Path p){
         try {
-            Files.createFile(p);
+            if(!Files.exists(p)) {
+                Files.createFile(p);
+                CSVWriter writer = new CSVWriter(new FileWriter(String.valueOf(p)), CSVWriter.DEFAULT_SEPARATOR, CSVWriter.NO_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END);
+                writer.writeNext("X,Y,Z,YAW,PITCH,ANGLE_X,ANGLE_Y,W,A,S,D,SPRINT,SNEAK,JUMP,LMB,RMB,VEL_X,VEL_Y,VEL_Z".split(","));
+                writer.close();
+            }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage() + " already exists.");
         }
     }
 
