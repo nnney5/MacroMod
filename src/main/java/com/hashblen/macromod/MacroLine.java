@@ -2,8 +2,11 @@ package com.hashblen.macromod;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraft.client.settings.GameSettings;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.config.GuiCheckBox;
 
+@SuppressWarnings("FieldMayBeFinal")
 public class MacroLine {
 
     private boolean W;
@@ -22,88 +25,44 @@ public class MacroLine {
         return W;
     }
 
-    public void setW(boolean w) {
-        W = w;
-    }
-
     public boolean isA() {
         return A;
-    }
-
-    public void setA(boolean a) {
-        A = a;
     }
 
     public boolean isS() {
         return S;
     }
 
-    public void setS(boolean s) {
-        S = s;
-    }
-
     public boolean isD() {
         return D;
-    }
-
-    public void setD(boolean d) {
-        D = d;
     }
 
     public boolean isSprint() {
         return sprint;
     }
 
-    public void setSprint(boolean sprint) {
-        this.sprint = sprint;
-    }
-
     public boolean isSneak() {
         return sneak;
-    }
-
-    public void setSneak(boolean sneak) {
-        this.sneak = sneak;
     }
 
     public boolean isJump() {
         return jump;
     }
 
-    public void setJump(boolean jump) {
-        this.jump = jump;
-    }
-
     public float getYaw() {
         return yaw;
-    }
-
-    public void setYaw(float yaw) {
-        this.yaw = yaw;
     }
 
     public float getPitch() {
         return pitch;
     }
 
-    public void setPitch(float pitch) {
-        this.pitch = pitch;
-    }
-
     public boolean isLmb() {
         return lmb;
     }
 
-    public void setLmb(boolean lmb) {
-        this.lmb = lmb;
-    }
-
     public boolean isRmb() {
         return rmb;
-    }
-
-    public void setRmb(boolean rmb) {
-        this.rmb = rmb;
     }
 
     private GuiCheckBox boxW;
@@ -203,7 +162,7 @@ public class MacroLine {
         fieldPitch.setText(Float.toString(0.0f));
     }
 
-    public void drawLine(int slotIdx, int x, int y, int slotHeight, int mouseX, int mouseY, boolean isSelected){
+    public void drawLine(int x, int y, int mouseX, int mouseY){
 
         Minecraft mc = Minecraft.getMinecraft();
         //y=y+slotIdx*20;
@@ -279,51 +238,51 @@ public class MacroLine {
         boxRmb.setIsChecked(rmb);
     }
 
-    public boolean mousePressed(int slotIdx, int x, int y, int mouseButton){
+    public void mousePressed(int x, int y, int mouseButton){
         if(this.boxW.isMouseOver()){
             W = !W;
             boxW.setIsChecked(W);
-            return true;
+            return;
         }
         else if(this.boxA.isMouseOver()){
             A = !A;
             boxA.setIsChecked(A);
-            return true;
+            return;
         }
         else if(this.boxS.isMouseOver()){
             S = !S;
             boxS.setIsChecked(S);
-            return true;
+            return;
         }
         else if(this.boxD.isMouseOver()){
             D = !D;
             boxD.setIsChecked(D);
-            return true;
+            return;
         }
         else if(this.boxSprint.isMouseOver()){
             sprint = !sprint;
             boxSprint.setIsChecked(sprint);
-            return true;
+            return;
         }
         else if(this.boxSneak.isMouseOver()){
             sneak = !sneak;
             boxSneak.setIsChecked(sneak);
-            return true;
+            return;
         }
         else if(this.boxJump.isMouseOver()){
             jump = !jump;
             boxJump.setIsChecked(jump);
-            return true;
+            return;
         }
         else if(this.boxLmb.isMouseOver()){
             lmb = !lmb;
             boxLmb.setIsChecked(lmb);
-            return true;
+            return;
         }
         else if(this.boxRmb.isMouseOver()){
             rmb = !rmb;
             boxRmb.setIsChecked(rmb);
-            return true;
+            return;
         }
         /*
         this.boxW.mousePressed(mc, x, y);
@@ -336,7 +295,6 @@ public class MacroLine {
         this.fieldYaw.mouseClicked(x, y, mouseButton);
         this.fieldPitch.mouseClicked(x, y, mouseButton);
         //System.out.println("mousePressed " + x + " " + y);
-        return false;
     }
 
     public void updateScreen(){
@@ -366,5 +324,27 @@ public class MacroLine {
                 lmb + "," +
                 rmb + "," +
                 " 0.0, 0.0, 0.0";
+    }
+
+    public void run(){
+        Minecraft minecraft = Minecraft.getMinecraft();
+        GameSettings gameSettings = minecraft.gameSettings;
+        KeyBinding.setKeyBindState(gameSettings.keyBindForward.getKeyCode(), this.W);
+        KeyBinding.setKeyBindState(gameSettings.keyBindLeft.getKeyCode(), this.A);
+        KeyBinding.setKeyBindState(gameSettings.keyBindBack.getKeyCode(), this.S);
+        KeyBinding.setKeyBindState(gameSettings.keyBindRight.getKeyCode(), this.D);
+        KeyBinding.setKeyBindState(gameSettings.keyBindSprint.getKeyCode(), this.sprint);
+        KeyBinding.setKeyBindState(gameSettings.keyBindSneak.getKeyCode(), this.sneak);
+        KeyBinding.setKeyBindState(gameSettings.keyBindJump.getKeyCode(), this.jump);
+        KeyBinding.setKeyBindState(gameSettings.keyBindAttack.getKeyCode(), this.lmb);
+        if (this.lmb) {
+            KeyBinding.onTick(gameSettings.keyBindAttack.getKeyCode());
+        }
+        KeyBinding.setKeyBindState(gameSettings.keyBindUseItem.getKeyCode(), this.rmb);
+        if (this.rmb) {
+            KeyBinding.onTick(gameSettings.keyBindUseItem.getKeyCode());
+        }
+        minecraft.thePlayer.rotationYaw = (float)((double)minecraft.thePlayer.rotationYaw+ this.yaw);
+        minecraft.thePlayer.rotationPitch = (float)((double)minecraft.thePlayer.rotationPitch + this.pitch);
     }
 }

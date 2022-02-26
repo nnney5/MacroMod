@@ -25,10 +25,11 @@ public class MenuGUI extends GuiScreen {
     GuiButton save;
     GuiTextField name;
     GuiButton load;
-    MacroFileGUI lines;
+    MacroFile lines;
     GuiButton addRow;
     GuiButton duplicateRow;
     GuiButton deleteRow;
+    @SuppressWarnings("FieldMayBeFinal")
     private List<MacroLine> lineList;
 
     private int selected = -1;
@@ -46,12 +47,13 @@ public class MenuGUI extends GuiScreen {
         this.buttonList.add(this.duplicateRow = new GuiButton(5, (int)(width*0.95)-100, (int)(height*0.05)+110, 100, 20, "\247dDuplicate Row"));
         this.buttonList.add(this.deleteRow = new GuiButton(2, (int)(width*0.95)-100, (int)(height*0.05)+130, 100, 20, "\2474Delete Row"));
 
-        this.lines = new MacroFileGUI(this, lineList, 310);
+        this.lines = new MacroFile(this, lineList, 310);
         lines.initLines();
     }
 
     public void mouseClicked (int mouseX, int mouseY, int mouseButton){
         if(close.isMouseOver()){
+            //noinspection RedundantCast
             mc.displayGuiScreen((GuiScreen) null);
         }
         if(load.isMouseOver()){

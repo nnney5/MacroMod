@@ -3,18 +3,22 @@ package com.hashblen.macromod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.settings.GameSettings;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.GuiScrollingList;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MacroFileGUI extends GuiScrollingList {
+@SuppressWarnings({"FieldMayBeFinal", "Convert2Diamond"})
+public class MacroFile extends GuiScrollingList {
     private List<MacroLine> lines;
     private MenuGUI parent;
 
     private ArrayList<GuiTextField> counterFields;
 
-    public MacroFileGUI(MenuGUI parent, List<MacroLine> lines, int listWidth) {
+    public MacroFile(MenuGUI parent, List<MacroLine> lines, int listWidth) {
         super(parent.getMinecraftInstance(), listWidth, parent.height, 32, parent.height - 88 + 4, 10, 20, parent.width, parent.height);
         this.parent = parent;
         this.lines = lines;
@@ -60,7 +64,7 @@ public class MacroFileGUI extends GuiScrollingList {
 
         MacroLine line = lines.get(slotIdx);
 
-        line.drawLine(slotIdx, this.left+30, slotTop, slotBuffer, mouseX, mouseY, isSelected(slotIdx));
+        line.drawLine(this.left+30, slotTop, mouseX, mouseY);
         GuiTextField cField = counterFields.get(slotIdx);
         cField.setText(Integer.toString(slotIdx));
         cField.xPosition = this.left+5;
@@ -78,7 +82,7 @@ public class MacroFileGUI extends GuiScrollingList {
     public void mouseClicked(int mouseX, int mouseY, int mouseButton){
         int i=0;
         for( MacroLine l : lines){
-            l.mousePressed(i, mouseX, mouseY, mouseButton);
+            l.mousePressed(mouseX, mouseY, mouseButton);
             i++;
         }
     }
@@ -106,7 +110,7 @@ public class MacroFileGUI extends GuiScrollingList {
             lines.add(index, new MacroLine(lines.get(index - 1)));
             GuiTextField g = new GuiTextField(counterFields.size()-1, Minecraft.getMinecraft().fontRendererObj, this.left, top, 25, 20);
             counterFields.add(g);
-        }catch(IndexOutOfBoundsException e){
+        }catch(IndexOutOfBoundsException ignored){
 
         }
     }

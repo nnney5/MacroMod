@@ -9,13 +9,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
+@SuppressWarnings("Convert2Diamond")
 public class CSVManip {
     //public CSVManip(){}
 
-    public static List<String[]> readLines(String name){
+    /*public static List<String[]> readLines(String name){
         try {
             CSVReader reader = new CSVReader(new FileReader(name));
             List<String[]> data = reader.readAll();
@@ -25,7 +27,7 @@ public class CSVManip {
             e.printStackTrace();
         }
         return new ArrayList<String[]>();
-    }
+    }*/
 
     public static List<MacroLine> linesToMacroLines(String name){
         try {
@@ -34,19 +36,19 @@ public class CSVManip {
             String[] record;
             List<MacroLine> lines = new ArrayList<MacroLine>();
             while((record = reader.readNext()) != null){
-                float y = Float.valueOf(record[5]);
-                float p = Float.valueOf(record[6]);
-                boolean w = Boolean.valueOf(record[7]);
-                boolean a = Boolean.valueOf(record[8]);
-                boolean s = Boolean.valueOf(record[9]);
-                boolean d = Boolean.valueOf(record[10]);
-                boolean sprint = Boolean.valueOf(record[11]);
-                boolean sneak = Boolean.valueOf(record[12]);
-                boolean jump = Boolean.valueOf(record[13]);
-                boolean lmb = Boolean.valueOf(record[14]);
-                boolean rmb = Boolean.valueOf(record[15]);
+                float y = Float.parseFloat(record[5]);
+                float p = Float.parseFloat(record[6]);
+                boolean w = Boolean.parseBoolean(record[7]);
+                boolean a = Boolean.parseBoolean(record[8]);
+                boolean s = Boolean.parseBoolean(record[9]);
+                boolean d = Boolean.parseBoolean(record[10]);
+                boolean sprint = Boolean.parseBoolean(record[11]);
+                boolean sneak = Boolean.parseBoolean(record[12]);
+                boolean jump = Boolean.parseBoolean(record[13]);
+                boolean lmb = Boolean.parseBoolean(record[14]);
+                boolean rmb = Boolean.parseBoolean(record[15]);
                 MacroLine l = new MacroLine(w, a, s, d, sprint, sneak, jump, y, p, lmb, rmb);
-                System.out.println(record.toString());
+                //System.out.println(Arrays.toString(record));
                 lines.add(l);
             }
             reader.close();
