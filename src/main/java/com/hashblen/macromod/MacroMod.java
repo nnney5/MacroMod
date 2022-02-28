@@ -3,6 +3,7 @@ package com.hashblen.macromod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.util.ChatComponentText;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -37,6 +38,7 @@ public class MacroMod
     public static Minecraft mc = Minecraft.getMinecraft();
     public static String path = "";
     public static String macroName = "default.csv";
+    public static boolean srv = false;
     private List<MacroLine> lineList;
 
     @EventHandler
@@ -55,6 +57,8 @@ public class MacroMod
             System.err.println("Last Name didn't end with .csv, so changed the name to: " + macroName);
         }
 
+        Property mSrv = config.get("Test", "srv", false);
+        srv = mSrv.getBoolean();
 
         try {
             Files.createDirectories(p);
@@ -136,6 +140,9 @@ public class MacroMod
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent e){
+        if(!srv && !mc.isSingleplayer()){
+            return;
+        }
         if(lineList.isEmpty()) {
             return;
         }
@@ -156,6 +163,10 @@ public class MacroMod
             mc.displayGuiScreen(new MenuGUI());
         }
         if(start.isPressed()){
+            if(!srv && !mc.isSingleplayer()){
+                mc.thePlayer.addChatMessage(new ChatComponentText("The \247cMacroMod \247r\247ncan't\247r be used on servers. Contact if you need a special permission."));
+                return;
+            }
             loadLines();
             if(isRunning){
                 endMacro();
