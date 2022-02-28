@@ -4,7 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -12,10 +15,12 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.apache.commons.io.FileUtils;
 import org.lwjgl.input.Keyboard;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,17 +43,55 @@ public class MacroMod
     public void preInit(FMLPreInitializationEvent event){
         path  = event.getModConfigurationDirectory().getParent() + "/MPKMod/macros/";
         Path p = Paths.get(path);
+
+        File configFile = new File(Loader.instance().getConfigDir(), "macromod.cfg");
+        Configuration config = new Configuration(configFile);
+        config.load();
+        Property mName = config.get("CSV", "lastFile", "default.csv");
+        macroName = mName.getString();
+        if(!macroName.endsWith(".csv")){
+            macroName = macroName + ".csv";
+            mName.set(macroName);
+            System.err.println("Last Name didn't end with .csv, so changed the name to: " + macroName);
+        }
+
+
         try {
             Files.createDirectories(p);
-            File def = new File("default.csv");
-            boolean isAlready = def.createNewFile();
-            if(!isAlready){
-                System.out.print("created /MPKMod/macros/default.csv" );
+            if(!Files.exists(Paths.get(path + macroName))){
+                File folder = new File(path);
+                List<File> files = (List<File>) FileUtils.listFiles(folder, new String[] {"csv"}, false);
+                if(!files.isEmpty()){
+                    macroName = files.get(0).getName();
+                    mName.set(macroName);
+                    System.out.println("macroName changed to: " + macroName);
+                }
+            }
+            if(isEmpty(p)){
+                File def = new File(path + macroName);
+                boolean notAlready = def.createNewFile();
+                if(notAlready){
+                    System.out.print("created /MPKMod/macros/" + macroName);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        loadLines();
+
+        if(config.hasChanged())
+            config.save();
+    }
+
+
+
+    public boolean isEmpty(Path path) throws IOException {
+        if (Files.isDirectory(path)) {
+            try (DirectoryStream<Path> directory = Files.newDirectoryStream(path)) {
+                return !directory.iterator().hasNext();
+            }
+        }
+
+        return false;
     }
 
     @EventHandler

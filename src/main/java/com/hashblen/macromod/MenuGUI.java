@@ -4,7 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
+import net.minecraftforge.fml.common.Loader;
+
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
@@ -58,6 +63,8 @@ public class MenuGUI extends GuiScreen {
         }
         if(load.isMouseOver()){
             macroName=name.getText();
+            macroName = cvsExt(macroName);
+            name.setText(macroName);
             createFile(Paths.get(path + macroName));
 
             this.lineList = CSVManip.linesToMacroLines(path + macroName);
@@ -65,12 +72,16 @@ public class MenuGUI extends GuiScreen {
             lines.initLines();
 
             System.out.println("Macro name changed to: " + macroName);
+            saveLastToCfg();
         }
         if(save.isMouseOver()){
             macroName=name.getText();
+            macroName = cvsExt(macroName);
+            name.setText(macroName);
             createFile(Paths.get(path + macroName));
             writeLines(macroLinesToLines(lineList), path + macroName);
             System.out.println("Macro saved to: " + macroName);
+            saveLastToCfg();
         }
         int index = selected;
         if(index==-1){
@@ -135,8 +146,28 @@ public class MenuGUI extends GuiScreen {
     @Override
     public void onGuiClosed() {
         super.onGuiClosed();
+        macroName = cvsExt(macroName);
         createFile(Paths.get(path + macroName));
         writeLines(macroLinesToLines(lineList), path + macroName);
         System.out.println("Macro saved to: " + macroName);
+        saveLastToCfg();
+    }
+    private void saveLastToCfg(){
+        File configFile = new File(Loader.instance().getConfigDir(), "macromod.cfg");
+        Configuration config = new Configuration(configFile);
+        config.load();
+        Property mName = config.get("CSV", "lastFile", "default.csv");
+        macroName = cvsExt(macroName);
+        mName.set(macroName);
+        if(config.hasChanged())
+            config.save();
+    }
+
+    private String cvsExt(String name){
+        String toReturn = name;
+        if(!name.endsWith(".csv")){
+            toReturn = name + ".csv";
+        }
+        return toReturn;
     }
 }
