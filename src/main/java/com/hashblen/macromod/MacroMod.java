@@ -114,6 +114,10 @@ public class MacroMod
         }
         if(start.isPressed()){
             loadLines();
+            if(isRunning){
+                endMacro();
+                tick=0;
+            }
             isRunning = !isRunning;
         }
     }
