@@ -50,11 +50,11 @@ public class MacroLine {
     }
 
     public float getYaw() {
-        return yaw;
+        return Float.parseFloat(fieldYaw.getText());
     }
 
     public float getPitch() {
-        return pitch;
+        return Float.parseFloat(fieldPitch.getText());
     }
 
     public boolean isLmb() {
@@ -103,9 +103,9 @@ public class MacroLine {
 
         Minecraft mc = Minecraft.getMinecraft();
 
-        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 30, 20);
+        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 45, 20);
         fieldYaw.setText(Float.toString(yaw));
-        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 30, 20);
+        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 45, 20);
         fieldPitch.setText(Float.toString(pitch));
 
     }
@@ -125,10 +125,12 @@ public class MacroLine {
 
         Minecraft mc = Minecraft.getMinecraft();
 
-        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 30, 20);
-        fieldYaw.setText(Float.toString(l.getYaw()));
-        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 30, 20);
-        fieldPitch.setText(Float.toString(l.getPitch()));
+        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 45, 20);
+        this.yaw = l.getYaw();
+        fieldYaw.setText(Float.toString(this.yaw));
+        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 45, 20);
+        this.pitch = l.getPitch();
+        fieldPitch.setText(Float.toString(this.pitch));
     }
 
     public MacroLine(){
@@ -156,9 +158,9 @@ public class MacroLine {
 
         Minecraft mc = Minecraft.getMinecraft();
 
-        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 30, 20);
+        this.fieldYaw = new GuiTextField(8, mc.fontRendererObj, 0, 0, 45, 20);
         fieldYaw.setText(Float.toString(0.0f));
-        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 30, 20);
+        this.fieldPitch = new GuiTextField(9, mc.fontRendererObj, 0, 0, 45, 20);
         fieldPitch.setText(Float.toString(0.0f));
     }
 
@@ -188,9 +190,9 @@ public class MacroLine {
         this.boxSneak.xPosition = x+110;
         this.boxJump.xPosition = x+140;
         this.fieldYaw.xPosition = x+160;
-        this.fieldPitch.xPosition = x+190;
-        this.boxLmb.xPosition = x+230;
-        this.boxRmb.xPosition = x+250;
+        this.fieldPitch.xPosition = x+205;
+        this.boxLmb.xPosition = x+260;
+        this.boxRmb.xPosition = x+280;
 
         this.boxW.enabled = W;
         this.boxA.enabled = A;
@@ -199,8 +201,8 @@ public class MacroLine {
         this.boxSprint.enabled = sprint;
         this.boxSneak.enabled = sneak;
         this.boxJump.enabled = jump;
-        this.fieldYaw.setText(String.valueOf(yaw));
-        this.fieldPitch.setText(String.valueOf(pitch));
+        //this.fieldYaw.setText(String.valueOf(yaw));
+        //this.fieldPitch.setText(String.valueOf(pitch));
         this.boxLmb.enabled = lmb;
         this.boxRmb.enabled = rmb;
 
@@ -297,9 +299,20 @@ public class MacroLine {
         //System.out.println("mousePressed " + x + " " + y);
     }
 
+    public void drawScreen(){
+        this.fieldYaw.drawTextBox();
+        this.fieldPitch.drawTextBox();
+    }
+
     public void updateScreen(){
         this.fieldYaw.updateCursorCounter();
         this.fieldPitch.updateCursorCounter();
+        try {
+            yaw = Float.parseFloat(fieldYaw.getText());
+            pitch = Float.parseFloat(fieldPitch.getText());
+        }catch(NumberFormatException ignored){
+
+        }
         //System.out.println("updateScreen ");
     }
 

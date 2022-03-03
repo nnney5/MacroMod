@@ -52,7 +52,7 @@ public class MenuGUI extends GuiScreen {
         this.buttonList.add(this.duplicateRow = new GuiButton(5, (int)(width*0.95)-100, (int)(height*0.05)+110, 100, 20, "\247dDuplicate Row"));
         this.buttonList.add(this.deleteRow = new GuiButton(2, (int)(width*0.95)-100, (int)(height*0.05)+130, 100, 20, "\2474Delete Row"));
 
-        this.lines = new MacroFile(this, lineList, 310);
+        this.lines = new MacroFile(this, lineList, 340);
         lines.initLines();
     }
 
@@ -110,7 +110,7 @@ public class MenuGUI extends GuiScreen {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.drawCenteredString(mc.fontRendererObj, "Edit \2476Macro", width/2, (int)(height*0.05), Color.WHITE.getRGB());
-        this.drawString(mc.fontRendererObj, "W   A    S   D Sprint Sneak Jump Yaw  Pitch   LMB RMB", 52, 20, Color.WHITE.getRGB());
+        this.drawString(mc.fontRendererObj, "W   A    S   D Sprint Sneak Jump   Yaw      Pitch    LMB RMB", 52, 20, Color.WHITE.getRGB());
         this.name.drawTextBox();
         this.lines.drawScreen(mouseX, mouseY, partialTicks);
     }
