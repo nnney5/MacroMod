@@ -299,11 +299,6 @@ public class MacroLine {
         //System.out.println("mousePressed " + x + " " + y);
     }
 
-    public void drawScreen(){
-        this.fieldYaw.drawTextBox();
-        this.fieldPitch.drawTextBox();
-    }
-
     public void updateScreen(){
         this.fieldYaw.updateCursorCounter();
         this.fieldPitch.updateCursorCounter();

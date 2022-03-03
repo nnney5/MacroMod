@@ -76,13 +76,6 @@ public class MacroFile extends GuiScrollingList {
         }
     }
 
-    public void drawScreen(int mouseX, int mouseY, float partialTicks){
-        super.drawScreen(mouseX, mouseY, partialTicks);
-        for( MacroLine l : lines){
-            l.drawScreen();
-        }
-    }
-
     public void mouseClicked(int mouseX, int mouseY, int mouseButton){
         for( MacroLine l : lines){
             l.mousePressed(mouseX, mouseY, mouseButton);
