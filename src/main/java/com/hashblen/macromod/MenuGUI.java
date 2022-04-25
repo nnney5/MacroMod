@@ -68,7 +68,7 @@ public class MenuGUI extends GuiScreen {
             createFile(Paths.get(path + macroName));
 
             this.lineList = CSVManip.linesToMacroLines(path + macroName);
-            this.lines = new MacroFile(this, lineList, 310);
+            this.lines = new MacroFile(this, lineList, 340);
             lines.initLines();
 
             System.out.println("Macro name changed to: " + macroName);
