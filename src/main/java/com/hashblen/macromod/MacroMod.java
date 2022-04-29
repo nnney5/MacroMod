@@ -191,16 +191,17 @@ public class MacroMod
         if(!srv && !mc.isSingleplayer()){
             return;
         }
-        if(lineList.isEmpty()) {
+        if(lineList==null) {
             return;
         }
-        if(tick>=lineList.size()){
+        if(isRunning && tick>=lineList.size() && !lineList.isEmpty()){
             isRunning=false;
             endMacro();
             tick=0;
+            mc.thePlayer.addChatMessage(new ChatComponentText("\247cMacroMod: \247rStopped macro " + macroName));
         }
         if(e.phase==TickEvent.Phase.END ){
-            if(isRunning) {
+            if(isRunning && !lineList.isEmpty()) {
                 runTick(tick);
                 tick++;
             }
@@ -230,7 +231,7 @@ public class MacroMod
                 mc.thePlayer.addChatMessage(new ChatComponentText("\247cMacroMod: \247rStop the recording to be able to open the GUI"));
                 return;
             }
-            if(isRunning){
+            if(isRunning && !lineList.isEmpty()){
                 mc.thePlayer.addChatMessage(new ChatComponentText("\247cMacroMod: \247rStop the playback to be able to open the GUI"));
                 return;
             }
@@ -250,9 +251,16 @@ public class MacroMod
                 return;
             }
             loadLines();
+            if(lineList.isEmpty()){
+                mc.thePlayer.addChatMessage(new ChatComponentText("\247cMacroMod: \247rMacro " + macroName + " is empty"));
+                return;
+            }
             if(isRunning){
                 endMacro();
                 tick=0;
+                mc.thePlayer.addChatMessage(new ChatComponentText("\247cMacroMod: \247rStopped " + macroName));
+            }else{
+                mc.thePlayer.addChatMessage(new ChatComponentText("\247cMacroMod: \247rStarted " + macroName));
             }
             isRunning = !isRunning;
         }
@@ -261,11 +269,11 @@ public class MacroMod
                 mc.thePlayer.addChatMessage(new ChatComponentText("\247cMacroMod: \247rCan't record in GUIs yet"));
                 return;
             }
-            if(!isRecording && !isRunning){
+            if(!isRecording && (!isRunning || lineList.isEmpty())){
                 loadLines();
                 mc.thePlayer.addChatMessage(new ChatComponentText("\247cMacroMod: \247rRecording started!"));
                 isRecording=true;
-            }else if(isRunning){
+            }else if(!isRecording){
                 mc.thePlayer.addChatMessage(new ChatComponentText("\247cMacroMod: \247rCan't record when playing!"));
             }
             else{
