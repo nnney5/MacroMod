@@ -188,9 +188,6 @@ public class MacroMod
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent e){
-        if(!srv && !mc.isSingleplayer()){
-            return;
-        }
         if(lineList==null) {
             return;
         }
@@ -238,10 +235,6 @@ public class MacroMod
             mc.displayGuiScreen(new MenuGUI());
         }
         if(start.isPressed()){
-            if(!srv && !mc.isSingleplayer()){
-                mc.thePlayer.addChatMessage(new ChatComponentText("The \247cMacroMod \247r\247ncan't\247r be used on servers. Contact if you need a special permission."));
-                return;
-            }
             if(isRecording){
                 mc.thePlayer.addChatMessage(new ChatComponentText("\247cMacroMod: \247rCan't playback when recording!"));
                 return;
